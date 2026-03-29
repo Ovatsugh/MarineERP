@@ -6,7 +6,7 @@
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-blue?logo=postgresql)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-Backend de um sistema ERP voltado para o setor náutico. Gerencia empresas, usuários, clientes, produtos e vendas com isolamento de dados por empresa e controle de acesso por perfil.
+Um ERP voltaro para o gerenciamento de lojas, permite cadastro de produtos, clientes e vendas e controle de acesso por empresa. Idealmente desenvolvido pensando em uma concessionária, mas flexivel para outros setores.
 
 ## Tecnologias
 
@@ -60,20 +60,11 @@ cp .env.example .env
 
 | Variável                 | Descrição                        |
 |--------------------------|----------------------------------|
-| `SPRING_PROFILES_ACTIVE` | Perfil ativo (`dev` ou `prod`)   |
 | `JWT_SECRET`             | Chave secreta para assinar o JWT |
 | `DB_URL`                 | URL JDBC do banco PostgreSQL     |
 | `DB_USERNAME`            | Usuário do banco                 |
 | `DB_PASSWORD`            | Senha do banco                   |
 
-## Executando localmente
-
-```bash
-export $(cat .env | xargs) && ./mvnw spring-boot:run
-```
 
 A documentação interativa estará disponível em `http://localhost:8080/swagger-ui/index.html`.
 
-## Licença
-
-MIT
