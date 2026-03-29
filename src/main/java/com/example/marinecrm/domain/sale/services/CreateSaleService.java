@@ -12,6 +12,7 @@ import com.example.marinecrm.domain.sale.SaleRepository;
 import com.example.marinecrm.domain.sale.DTO.SalesRequest;
 import com.example.marinecrm.domain.sale.DTO.SalesResponse;
 import com.example.marinecrm.domain.user.User;
+import com.example.marinecrm.exceptions.InsufficientStockException;
 import com.example.marinecrm.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -41,6 +42,14 @@ public class CreateSaleService implements Command<SalesRequest, SalesResponse> {
         List<ItemSale> items = request.items().stream().map(itemRequest -> {
             Product product = productRepository.findById(itemRequest.productId()).orElseThrow(() ->
                     new ResourceNotFoundException("Produto não encontrado: " + itemRequest.productId()));
+
+            if (product.getStock_quantity() < itemRequest.quantity()) {
+                throw new InsufficientStockException(product.getName(), product.getStock_quantity());
+            }
+
+            product.setStock_quantity(product.getStock_quantity() - itemRequest.quantity());
+            productRepository.save(product);
+
             return new ItemSale(itemRequest, null, product);
         }).toList();
 

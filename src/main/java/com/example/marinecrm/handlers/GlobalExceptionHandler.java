@@ -3,6 +3,7 @@ package com.example.marinecrm.handlers;
 
 import com.example.marinecrm.exceptions.EmailAlreadyExistsException;
 import com.example.marinecrm.exceptions.ForbiddenException;
+import com.example.marinecrm.exceptions.InsufficientStockException;
 import com.example.marinecrm.exceptions.InvalidCredentialsException;
 import com.example.marinecrm.exceptions.InvalidRoleException;
 import com.example.marinecrm.exceptions.ResourceNotFoundException;
@@ -50,6 +51,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidRoleException.class)
     public ResponseEntity<Map<String, String>> handleInvalidRole(InvalidRoleException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", ex.getMessage()));
+    }
+
+    @ExceptionHandler(InsufficientStockException.class)
+    public ResponseEntity<Map<String, String>> handleInsufficientStock(InsufficientStockException ex) {
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(Map.of("message", ex.getMessage()));
     }
 
 }
