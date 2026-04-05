@@ -43,7 +43,7 @@ public class Product {
     @JsonManagedReference
     private List<ItemSale> itemSales;
 
-    @Column(name = "bikeModel")
+    @Column(name = "bike_model")
     private String bikeModel;
 
     @Column(name = "price")
