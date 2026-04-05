@@ -65,7 +65,17 @@ cp .env.example .env
 | `DB_USERNAME`            | Usuário do banco                 |
 | `DB_PASSWORD`            | Senha do banco                   |
 
-Rodar  docker compose -f docker-compose.yml -f docker-compose-dev.yml up --build
+### Desenvolvimento 
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose-dev.yml up --build
+```
+
+### Producão
+
+```bash
+docker compose up --build
+```
 
 A documentação interativa estará disponível em `http://localhost:8080/swagger-ui/index.html`.
 

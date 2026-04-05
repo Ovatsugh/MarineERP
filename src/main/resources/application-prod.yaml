@@ -1,4 +1,4 @@
 logging:
   level:
     org.springframework.security: WARN
-    org.flywaydb: INFO
+    org.flywaydb: WARN
