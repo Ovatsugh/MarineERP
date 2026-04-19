@@ -26,6 +26,12 @@ public class UserController {
     private final GetAllUserService getAllUserService;
     private final GetUserByIdService getUserByIdService;
     private final UpdateUserService updateUserService;
+    private final GetMeService getMeService;
+
+    @GetMapping("/me")
+    public ResponseEntity<UserResponse> getMe() {
+        return ResponseEntity.ok(getMeService.execute(null));
+    }
 
     @PostMapping()
     public ResponseEntity<UserResponse> createUser(@Validated @RequestBody UserRequest request) {
@@ -48,7 +54,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserResponse> updateUser(@PathVariable UUID id, @Validated @RequestBody UserRequest request) {
-        return ResponseEntity.ok(updateUserService.execute(new UserUpdateRequest(id, request)));
+    public ResponseEntity<UserResponse> updateUser(@PathVariable UUID id, @Validated @RequestBody UserUpdateRequest request) {
+        return ResponseEntity.ok(updateUserService.execute(new UserUpdateRequest(id, request.name(), request.email(), request.password(), request.role())));
     }
 }

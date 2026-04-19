@@ -6,6 +6,7 @@ import com.example.marinecrm.domain.user.UserRepository;
 import com.example.marinecrm.domain.user.DTO.UserResponse;
 import com.example.marinecrm.domain.user.DTO.UserUpdateRequest;
 import com.example.marinecrm.exceptions.ForbiddenException;
+import com.example.marinecrm.exceptions.InvalidRoleException;
 import com.example.marinecrm.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,7 +33,16 @@ public class UpdateUserService implements Command<UserUpdateRequest, UserRespons
             throw new ForbiddenException();
         }
 
-        user.update(request, passwordEncoder.encode(request.payload().password()));
+        switch (request.role()) {
+            case ADMIN, EMPLOYEE -> {}
+            default -> throw new InvalidRoleException("Role inválida: apenas ADMIN e EMPLOYEE são permitidos");
+        }
+
+        String encodedPassword = (request.password() != null && !request.password().isBlank())
+                ? passwordEncoder.encode(request.password())
+                : null;
+
+        user.update(request, encodedPassword);
 
         User saved = userRepository.save(user);
 

@@ -80,9 +80,12 @@ public class User implements UserDetails {
 
 
     public void update(UserUpdateRequest request, String encodedPassword) {
-        this.name = request.payload().name();
-        this.email = request.payload().email();
-        this.password = encodedPassword;
+        this.name = request.name();
+        this.email = request.email();
+        this.role = request.role();
+        if (encodedPassword != null) {
+            this.password = encodedPassword;
+        }
     }
 
     @Override

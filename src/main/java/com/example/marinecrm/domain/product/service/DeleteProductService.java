@@ -3,6 +3,7 @@ package com.example.marinecrm.domain.product.service;
 import com.example.marinecrm.Command;
 import com.example.marinecrm.domain.product.Product;
 import com.example.marinecrm.domain.product.ProductRepository;
+import com.example.marinecrm.domain.sale.ItemSaleRepository;
 import com.example.marinecrm.domain.user.User;
 import com.example.marinecrm.exceptions.ForbiddenException;
 import com.example.marinecrm.exceptions.ResourceNotFoundException;
@@ -18,6 +19,7 @@ import java.util.UUID;
 public class DeleteProductService implements Command<UUID, Void> {
 
     private final ProductRepository productRepository;
+    private final ItemSaleRepository itemSaleRepository;
 
     @Override
     @Transactional
@@ -30,6 +32,8 @@ public class DeleteProductService implements Command<UUID, Void> {
         if (!product.getUser().getCompany().getId().equals(user.getCompany().getId())) {
             throw new ForbiddenException();
         }
+
+        itemSaleRepository.findByProduct_Id(id).forEach(item -> item.setProduct(null));
 
         productRepository.delete(product);
         return null;
