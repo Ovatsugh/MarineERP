@@ -77,12 +77,13 @@ jobs:
                --arg DB_USERNAME "$DB_USERNAME" \
                --arg DB_PASSWORD "$DB_PASSWORD" \
               '.containerDefinitions[0].image = $IMAGE |
-               .containerDefinitions[0].portMappings = [{"containerPort": 8080, "hostPort": 8080, "protocol": "tcp"}] |
+               .containerDefinitions[0].portMappings = [{"containerPort": 80, "hostPort": 80, "protocol": "tcp"}] |
                .containerDefinitions[0].environment = [
                  {"name": "JWT_SECRET", "value": $JWT_SECRET},
                  {"name": "DB_URL", "value": $DB_URL},
                  {"name": "DB_USERNAME", "value": $DB_USERNAME},
-                 {"name": "DB_PASSWORD", "value": $DB_PASSWORD}
+                 {"name": "DB_PASSWORD", "value": $DB_PASSWORD},
+                 {"name": "SPRING_PROFILES_ACTIVE", "value": "prod"}
                ] |
                del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .placementConstraints, .compatibilities, .registeredAt, .registeredBy)')
 
