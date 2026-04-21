@@ -77,6 +77,7 @@ jobs:
                --arg DB_USERNAME "$DB_USERNAME" \
                --arg DB_PASSWORD "$DB_PASSWORD" \
               '.containerDefinitions[0].image = $IMAGE |
+               .containerDefinitions[0].portMappings = [{"containerPort": 8080, "hostPort": 8080, "protocol": "tcp"}] |
                .containerDefinitions[0].environment = [
                  {"name": "JWT_SECRET", "value": $JWT_SECRET},
                  {"name": "DB_URL", "value": $DB_URL},
